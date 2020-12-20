@@ -6,11 +6,6 @@ namespace shlosi3
 {
     public class MstHelper
     {
-        public void PrintMst<T>(DirectedGraph<T> mst)
-        {
-            mst.Edges.ForEach(x => { Console.WriteLine($"{x.SourceVertex.Value} => {x.DestinationVertex.Value}"); });
-        }
-
         public void AddEdgeToMst<T>(DirectedGraph<T> mst, Edge<T> edge)
         {
             var path = FindPath(mst, edge.SourceVertex, edge.DestinationVertex);

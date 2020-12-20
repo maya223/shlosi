@@ -1,23 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace shlosi3
 {
     public class Program
     {
+        public static Random Rand = new Random();
+        public static int EDGES_COUNT = 50;
+        public static int VERTICES_COUNT = 21;
+        public static int MIN_WEIGHT = 4;
+        public static int MAX_WEIGHT = 52;
+
         public static void Main()
         {
             var mstHelper = new MstHelper();
+            var prim = new PrimAlgorithm<char>();
 
             // question 1
-            var mst = GetMst();
-            mstHelper.PrintMst(mst);
+            Console.WriteLine("----------------- Question 1 ---------------");
+
+            var graph = GenerateGraph();
+            var mst = prim.GetMst(graph, graph.Vertices[0]);
+            //PrintDirectedGraph(graph);
 
             Console.WriteLine("-----------------------------------------");
 
             // question 2
-            mstHelper.AddEdgeToMst(mst, new Edge<char>(mst.Vertices[0], mst.Vertices[4], 2));
-            mstHelper.PrintMst(mst);
+            Console.WriteLine("----------------- Question 2 ---------------");
+            //mstHelper.AddEdgeToMst(mst, new Edge<char>(mst.Vertices[0], mst.Vertices[4], 2));
+            //PrintDirectedGraph(graph);
+
+            Console.WriteLine("-----------------------------------------");
+
+            // question 3
+            graph = GenerateRandomGraph();
+
+            Console.WriteLine("---------------- GRAPH ----------------\r\n");
+            PrintGraph(graph);
+
+            mst = prim.GetMst(graph, graph.Vertices[0]);
+
+            Console.WriteLine("------------------ MST - BEFORE --------------------");
+            PrintDirectedGraph(mst);
+
+            mstHelper.AddEdgeToMst(mst, GenerateNewEdge(graph));
+            Console.WriteLine("------------------ MST - AFTER --------------------");
+            PrintDirectedGraph(mst);
+        }
+
+        private static Edge<T> GenerateNewEdge<T>(Graph<T> graph)
+        {
+            var sourceIndex = Rand.Next(VERTICES_COUNT);
+            var destinantionVertex = GenerateDestinationIndex(sourceIndex, graph);
+            
+            return new Edge<T>(graph.Vertices[sourceIndex], 
+                graph.Vertices[destinantionVertex], MIN_WEIGHT - 1);
         }
 
         /*************** Question 1 ****************/
@@ -63,15 +101,75 @@ namespace shlosi3
 
             return graph;
         }
-        
-        private static DirectedGraph<char> GetMst()
-        {
-            var graph = GenerateGraph();
-            var prim = new PrimAlgorithm<char>();
 
-            return prim.GetMst(graph, graph.Vertices[0]);
+        private static Graph<char> GenerateRandomGraph()
+        {
+            var vertexValue = 'a';
+
+            var graph = new Graph<char>();
+
+            for (var index = 0; index < VERTICES_COUNT; index++)
+            {
+                graph.Vertices.Add(new Vertex<char>(vertexValue));
+                vertexValue++;
+            }
+
+            int weight, sourceIndex, destinationIndex;
+
+            for (var index = 0; index < EDGES_COUNT; index++)
+            {
+                weight = Rand.Next(MIN_WEIGHT, MAX_WEIGHT);
+                sourceIndex = Rand.Next(VERTICES_COUNT);
+                
+                destinationIndex = GenerateDestinationIndex(sourceIndex, graph);
+
+                graph.AddEdge(graph.Vertices[sourceIndex],
+                                graph.Vertices[destinationIndex], weight);
+                
+            }
+
+            return graph;
         }
 
-        /**************************************************/
+        private static int GenerateDestinationIndex<T>(int sourceIndex, Graph<T> graph)
+        {
+            var destinationIndex = Rand.Next(VERTICES_COUNT);
+
+            while (destinationIndex == sourceIndex || 
+                   graph.Edges.Any(edge => DoEdgesMatch(edge, new Edge<T>(graph.Vertices[sourceIndex], graph.Vertices[destinationIndex]))))
+            {
+                destinationIndex = Rand.Next(VERTICES_COUNT);
+            };
+
+            return destinationIndex;
+        }
+
+        private static bool DoEdgesMatch<T>(Edge<T> edge1, Edge<T> edge2)
+        {
+            return (edge1.SourceVertex.Value.Equals(edge2.SourceVertex.Value) &&
+                    edge1.DestinationVertex.Value.Equals(edge2.DestinationVertex.Value)) ||
+                   (edge1.SourceVertex.Value.Equals(edge2.DestinationVertex.Value) &&
+                    edge1.DestinationVertex.Value.Equals(edge2.SourceVertex.Value));
+        }
+
+        public static void PrintGraph<T>(Graph<T> graph)
+        {
+            var edgesToPrint = new List<Edge<T>>();
+            
+            foreach (var edge in graph.Edges)
+            {
+                if (!edgesToPrint.Any(x => DoEdgesMatch(x, edge)))
+                {
+                    edgesToPrint.Add(edge);
+                }
+            }
+
+            edgesToPrint.ForEach(x => { Console.WriteLine($"{x.SourceVertex.Value} == {x.Weight} == {x.DestinationVertex.Value}"); });
+        }
+
+        public static void PrintDirectedGraph<T>(DirectedGraph<T> graph)
+        {
+            graph.Edges.ForEach(x => { Console.WriteLine($"{x.SourceVertex.Value} == {x.Weight} ==> {x.DestinationVertex.Value}"); });
+        }
     }
 }
