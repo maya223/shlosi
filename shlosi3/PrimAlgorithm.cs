@@ -8,19 +8,21 @@ namespace shlosi3
     {
         readonly int infinite = int.MaxValue - 1;
 
-        public DirectedGraph<T> Prim(Graph<T> g, Vertex<T> sourceVertex)
+        public DirectedGraph<T> GetMst(Graph<T> g, Vertex<T> sourceVertex)
         {
             var mst = new DirectedGraph<T>{Vertices = g.Vertices};
+            var parentsDictionary = new Dictionary<Vertex<T>, Vertex<T>>();
             var dictionary = GetVerticesDictionary(g.Vertices);
             dictionary[sourceVertex] = 0;
 
-            var q = GetQueue(dictionary);
+            var q = GetVerticesQueue(dictionary);
 
             while (q.Count > 0)
             {
                 var currentVertex = q.Dequeue();
+                var edges = g.Edges.Where(x => x.SourceVertex.Value.Equals(currentVertex.Value));
 
-                foreach (var edge in g.Edges.Where(x=>x.SourceVertex.Value.Equals(currentVertex.Value)))
+                foreach (var edge in edges)
                 {
                     var neighbor = edge.DestinationVertex;
 
@@ -29,11 +31,12 @@ namespace shlosi3
                         dictionary[neighbor] = edge.Weight;
 
                         var qItem = GetVertexInQueue(q, neighbor);
+                        
                         qItem.Weight = edge.Weight;
+                        q.UpdateItem(qItem);
 
-                        q.UpdateItem(q.StoredValues.IndexOf(qItem));
-
-                        mst.AddEdge(currentVertex, neighbor, edge.Weight);
+                        var newEdge = new Edge<T>(currentVertex, neighbor, edge.Weight);
+                        ReplaceVertexParent(mst, neighbor, newEdge);
                     }
                 }
             }
@@ -48,7 +51,13 @@ namespace shlosi3
 
         private WeightedVertex<T> GetVertexInQueue(PriorityQueue<WeightedVertex<T>> queue, Vertex<T> vertex)
         {
-            return queue.StoredValues.FirstOrDefault(x=> x.Value.Equals(vertex.Value));
+            return queue.GetItem(x=> x.Value.Equals(vertex.Value));
+        }
+
+        private void ReplaceVertexParent(DirectedGraph<T> tree, Vertex<T> destVertex, Edge<T> newEdge)
+        {
+            tree.Edges.RemoveAll(x => x.DestinationVertex.Value.Equals(destVertex.Value));
+            tree.AddEdge(newEdge);
         }
 
         private Dictionary<Vertex<T>, int> GetVerticesDictionary(List<Vertex<T>> vertices)
@@ -56,7 +65,7 @@ namespace shlosi3
             return vertices.ToDictionary(x=> x, x => infinite);
         }
 
-        private PriorityQueue<WeightedVertex<T>> GetQueue(Dictionary<Vertex<T>, int> verticesDictionary)
+        private PriorityQueue<WeightedVertex<T>> GetVerticesQueue(Dictionary<Vertex<T>, int> verticesDictionary)
         {
             var q = new PriorityQueue<WeightedVertex<T>>();
             var weightedVertices = verticesDictionary.Select(x => new WeightedVertex<T>(x.Key, x.Value)).ToList();

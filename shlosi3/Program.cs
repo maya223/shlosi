@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace shlosi3
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            // question 1
-            var mst = GetMST();
+            var mstHelper = new MstHelper();
 
-            mst.Edges.ForEach( x=>
-            {
-                Console.WriteLine($"{x.SourceVertex.Value} => {x.DestinationVertex.Value}");
-            });
+            // question 1
+            var mst = GetMst();
+            mstHelper.PrintMst(mst);
+
+            Console.WriteLine("-----------------------------------------");
 
             // question 2
-            var q2 = new Question2<char>();
-            //q2.AddEdgeToMST(mst, new Edge<char>(mst.Vertices[0], mst.Vertices[4], 2));
+            mstHelper.AddEdgeToMst(mst, new Edge<char>(mst.Vertices[0], mst.Vertices[4], 2));
+            mstHelper.PrintMst(mst);
         }
+
+        /*************** Question 1 ****************/
 
         private static Graph<char> GenerateGraph()
         {
@@ -63,13 +64,14 @@ namespace shlosi3
             return graph;
         }
         
-        // Question 1 
-        private static DirectedGraph<char> GetMST()
+        private static DirectedGraph<char> GetMst()
         {
             var graph = GenerateGraph();
             var prim = new PrimAlgorithm<char>();
 
-            return prim.Prim(graph, graph.Vertices[0]);
+            return prim.GetMst(graph, graph.Vertices[0]);
         }
+
+        /**************************************************/
     }
 }

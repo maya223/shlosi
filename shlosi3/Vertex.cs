@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace shlosi3
+﻿namespace shlosi3
 {
     public class Vertex<T>
     {

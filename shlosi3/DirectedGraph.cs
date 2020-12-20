@@ -1,4 +1,6 @@
-﻿namespace shlosi3
+﻿using System;
+
+namespace shlosi3
 {
     public class DirectedGraph<T> : Graph<T>
     {

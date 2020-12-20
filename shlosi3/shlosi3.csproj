@@ -43,12 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BfsAlgorithm.cs" />
+    <Compile Include="BfsColors.cs" />
     <Compile Include="DirectedGraph.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="MstHelper.cs" />
     <Compile Include="PrimAlgorithm.cs" />
     <Compile Include="PriorityQueue.cs" />
-    <Compile Include="Question2.cs" />
     <Compile Include="Vertex.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

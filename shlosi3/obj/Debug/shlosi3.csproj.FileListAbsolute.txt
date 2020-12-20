@@ -5,3 +5,10 @@ C:\Users\97254\source\repos\shlosi3\shlosi3\bin\Debug\shlosi3.exe
 C:\Users\97254\source\repos\shlosi3\shlosi3\bin\Debug\shlosi3.pdb
 C:\Users\97254\source\repos\shlosi3\shlosi3\obj\Debug\shlosi3.exe
 C:\Users\97254\source\repos\shlosi3\shlosi3\obj\Debug\shlosi3.pdb
+C:\Users\inbal\OneDrive\Documents\מכללה\אלגו\shlosi\shlosi3\bin\Debug\shlosi3.exe.config
+C:\Users\inbal\OneDrive\Documents\מכללה\אלגו\shlosi\shlosi3\bin\Debug\shlosi3.exe
+C:\Users\inbal\OneDrive\Documents\מכללה\אלגו\shlosi\shlosi3\bin\Debug\shlosi3.pdb
+C:\Users\inbal\OneDrive\Documents\מכללה\אלגו\shlosi\shlosi3\obj\Debug\shlosi3.csprojAssemblyReference.cache
+C:\Users\inbal\OneDrive\Documents\מכללה\אלגו\shlosi\shlosi3\obj\Debug\shlosi3.csproj.CoreCompileInputs.cache
+C:\Users\inbal\OneDrive\Documents\מכללה\אלגו\shlosi\shlosi3\obj\Debug\shlosi3.exe
+C:\Users\inbal\OneDrive\Documents\מכללה\אלגו\shlosi\shlosi3\obj\Debug\shlosi3.pdb

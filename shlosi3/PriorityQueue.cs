@@ -7,7 +7,7 @@ namespace shlosi3
     public class PriorityQueue<T>
         where T : IComparable
     {
-        public List<T> StoredValues { get; }
+        protected List<T> StoredValues { get; }
         public virtual int Count => StoredValues.Count - 1;
 
         public PriorityQueue()
@@ -83,8 +83,8 @@ namespace shlosi3
                 }
                 else if (child == 1)
                 {
-                    T parentValue = StoredValues[cell];
-                    T rightChildValue = StoredValues[2 * cell + 1];
+                    var parentValue = StoredValues[cell];
+                    var rightChildValue = StoredValues[2 * cell + 1];
 
                     StoredValues[cell] = rightChildValue;
                     StoredValues[2 * cell + 1] = parentValue;
@@ -143,9 +143,14 @@ namespace shlosi3
             }
         }
 
-        public void UpdateItem(int itemIndex)
+        public T GetItem(Func<T, bool> predicate)
         {
-            BubbleUp(itemIndex);
+            return StoredValues.FirstOrDefault(predicate);
+        }
+
+        public void UpdateItem(T item)
+        {
+            BubbleUp(StoredValues.IndexOf(item));
         }
     }
 }
