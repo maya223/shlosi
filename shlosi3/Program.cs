@@ -17,45 +17,42 @@ namespace shlosi3
             var mstHelper = new MstHelper();
             var prim = new PrimAlgorithm<char>();
 
-            // question 1
-            Console.WriteLine("----------------- Question 1 ---------------");
+            // Generate a graph
+            var graph = GenerateRandomGraph();
 
-            var graph = GenerateGraph();
-            var mst = prim.GetMst(graph, graph.Vertices[0]);
-            //PrintDirectedGraph(graph);
-
-            Console.WriteLine("-----------------------------------------");
-
-            // question 2
-            Console.WriteLine("----------------- Question 2 ---------------");
-            //mstHelper.AddEdgeToMst(mst, new Edge<char>(mst.Vertices[0], mst.Vertices[4], 2));
-            //PrintDirectedGraph(graph);
-
-            Console.WriteLine("-----------------------------------------");
-
-            // question 3
-            graph = GenerateRandomGraph();
-
-            Console.WriteLine("---------------- GRAPH ----------------\r\n");
+            Console.WriteLine("---------------- GRAPH ----------------");
             PrintGraph(graph);
 
-            mst = prim.GetMst(graph, graph.Vertices[0]);
+            // Run prim to get MST
+            var mst = prim.GetMst(graph, graph.Vertices[0]);
 
-            Console.WriteLine("------------------ MST - BEFORE --------------------");
+            Console.WriteLine("------------------ MST --------------------");
             PrintDirectedGraph(mst);
 
-            mstHelper.AddEdgeToMst(mst, GenerateNewEdge(graph));
-            Console.WriteLine("------------------ MST - AFTER --------------------");
+            // Add an edge that doesn't change the MST
+            var newEdge = GenerateNewEdge(graph, MAX_WEIGHT + 1);
+            Console.WriteLine($"-------------- New Edge 1: {newEdge.SourceVertex.Value} === {newEdge.Weight} ===> {newEdge.DestinationVertex.Value} ----------------");
+            
+            mstHelper.AddEdgeToMst(mst, newEdge);
+            Console.WriteLine("------------------ MST - AFTER EDGE 1 --------------------");
+            PrintDirectedGraph(mst);
+
+            // Add an edge that changes the MST
+            newEdge = GenerateNewEdge(graph, MIN_WEIGHT - 1);
+            Console.WriteLine($"-------------- New Edge 2: {newEdge.SourceVertex.Value} === {newEdge.Weight} ===> {newEdge.DestinationVertex.Value} ----------------");
+            
+            mstHelper.AddEdgeToMst(mst, newEdge);
+            Console.WriteLine("------------------ MST - AFTER EDGE 2 --------------------");
             PrintDirectedGraph(mst);
         }
 
-        private static Edge<T> GenerateNewEdge<T>(Graph<T> graph)
+        private static Edge<T> GenerateNewEdge<T>(Graph<T> graph, int weight)
         {
             var sourceIndex = Rand.Next(VERTICES_COUNT);
             var destinantionVertex = GenerateDestinationIndex(sourceIndex, graph);
             
             return new Edge<T>(graph.Vertices[sourceIndex], 
-                graph.Vertices[destinantionVertex], MIN_WEIGHT - 1);
+                graph.Vertices[destinantionVertex], weight);
         }
 
         /*************** Question 1 ****************/

@@ -21,7 +21,7 @@ namespace shlosi3
         private Dictionary<Vertex<T>, Vertex<T>> FindPath<T>(DirectedGraph<T> mst, Vertex<T> source, Vertex<T> destination)
         {
             var path = new Dictionary<Vertex<T>, Vertex<T>>();
-            var parents = mst.Edges.ToDictionary(edge => edge.DestinationVertex.Value, edge => edge.SourceVertex);
+            var parents = new BfsAlgorithm().Bfs(source, mst);
 
             var currentVertex = destination;
 
@@ -47,7 +47,9 @@ namespace shlosi3
         private IEnumerable<Edge<T>> GetMatchingEdges<T>(Graph<T> graph, Vertex<T> sourceVertex, Vertex<T> destVertex)
         {
             return graph.Edges.Where(edge => edge.SourceVertex.Value.Equals(sourceVertex.Value) &&
-                                             edge.DestinationVertex.Value.Equals(destVertex.Value));
+                                             edge.DestinationVertex.Value.Equals(destVertex.Value) ||
+                                             edge.SourceVertex.Value.Equals(destVertex.Value) &&
+                                             edge.DestinationVertex.Value.Equals(sourceVertex.Value));
         }
     }
 }
