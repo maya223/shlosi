@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 
-namespace shlosi3
+namespace prim
 {
     public class BfsAlgorithm
     {

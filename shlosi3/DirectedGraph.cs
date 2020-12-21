@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace shlosi3
+namespace prim
 {
     public class DirectedGraph<T> : Graph<T>
     {

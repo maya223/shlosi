@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+/**
+ * ענבל אברהם 314832908
+ * מאיה רחמני 209532076
+ */
 
-namespace shlosi3
+namespace prim
 {
     public class Program
     {

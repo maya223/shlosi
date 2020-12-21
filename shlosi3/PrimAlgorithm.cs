@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace shlosi3
+namespace prim
 {
     public class PrimAlgorithm<T> where T : IComparable
     {

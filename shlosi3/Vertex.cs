@@ -1,4 +1,4 @@
-﻿namespace shlosi3
+﻿namespace prim
 {
     public class Vertex<T>
     {

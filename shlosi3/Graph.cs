@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace shlosi3
+namespace prim
 {
     public class Graph<T>
     {
@@ -12,11 +12,6 @@ namespace shlosi3
         {
             Vertices = new List<Vertex<T>>();
             Edges = new List<Edge<T>>();
-        }
-
-        public void Add(Vertex<T> vertex)
-        {
-            Vertices.Add(vertex);
         }
 
         public virtual void AddEdge(Vertex<T> v1, Vertex<T> v2, int weight)

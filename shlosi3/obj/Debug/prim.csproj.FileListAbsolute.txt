@@ -1,0 +1,4 @@
+C:\Users\97254\source\repos\shlosi3\shlosi3\obj\Debug\prim.csprojAssemblyReference.cache
+C:\Users\97254\source\repos\shlosi3\shlosi3\obj\Debug\prim.csproj.CoreCompileInputs.cache
+C:\Users\97254\source\repos\shlosi3\shlosi3\obj\Debug\shlosi3.exe
+C:\Users\97254\source\repos\shlosi3\shlosi3\obj\Debug\shlosi3.pdb

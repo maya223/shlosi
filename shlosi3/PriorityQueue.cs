@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace shlosi3
+namespace prim
 {
     public class PriorityQueue<T>
         where T : IComparable

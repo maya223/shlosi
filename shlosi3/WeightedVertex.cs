@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace shlosi3
+namespace prim
 {
     public class WeightedVertex<T> : Vertex<T>, IComparable
     {
